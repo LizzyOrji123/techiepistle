@@ -1,9 +1,7 @@
-module.exports = function(api) {
-  var validEnv = ['development', 'test', 'production']
-  var currentEnv = api.env()
-  var isDevelopmentEnv = api.env('development')
-  var isProductionEnv = api.env('production')
-  var isTestEnv = api.env('test')
+module.exports = function (api) {
+  const validEnv = ['development', 'test', 'production'];
+  const currentEnv = api.env();
+  const isTestEnv = api.env('test');
 
   if (!validEnv.includes(currentEnv)) {
     throw new Error(
@@ -12,7 +10,7 @@ module.exports = function(api) {
         '"test", and "production". Instead, received: ' +
         JSON.stringify(currentEnv) +
         '.'
-    )
+    );
   }
 
   return {
@@ -21,20 +19,20 @@ module.exports = function(api) {
         '@babel/preset-env',
         {
           targets: {
-            node: 'current'
-          }
-        }
+            node: 'current',
+          },
+        },
       ],
-      (isProductionEnv || isDevelopmentEnv) && [
+      !isTestEnv && [
         '@babel/preset-env',
         {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
           corejs: 3,
           modules: false,
-          exclude: ['transform-typeof-symbol']
-        }
-      ]
+          exclude: ['transform-typeof-symbol'],
+        },
+      ],
     ].filter(Boolean),
     plugins: [
       'babel-plugin-macros',
@@ -44,39 +42,39 @@ module.exports = function(api) {
       [
         '@babel/plugin-proposal-class-properties',
         {
-          loose: true
-        }
+          loose: false, // Set 'loose' to false
+        },
       ],
       [
         '@babel/plugin-proposal-object-rest-spread',
         {
-          useBuiltIns: true
-        }
+          useBuiltIns: true,
+        },
       ],
       [
         '@babel/plugin-proposal-private-methods',
         {
-          loose: true
-        }
+          loose: false, // Set 'loose' to false
+        },
       ],
       [
         '@babel/plugin-proposal-private-property-in-object',
         {
-          loose: true
-        }
+          loose: false, // Set 'loose' to false
+        },
       ],
       [
         '@babel/plugin-transform-runtime',
         {
-          helpers: false
-        }
+          helpers: false,
+        },
       ],
       [
         '@babel/plugin-transform-regenerator',
         {
-          async: false
-        }
-      ]
-    ].filter(Boolean)
-  }
-}
+          async: false,
+        },
+      ],
+    ].filter(Boolean),
+  };
+};
