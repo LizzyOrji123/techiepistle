@@ -1,4 +1,4 @@
-// app/javascript/components/MyComponent.jsx
+// app/javascript/components/MyComponent.js
 
 import React from 'react';
 

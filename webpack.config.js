@@ -1,11 +1,14 @@
 const path = require('path');
 
 module.exports = {
-  mode: 'development', // Add this line to set the mode
+  mode: 'development',
   entry: './app/javascript/packs/application.js',
   output: {
     filename: 'bundle.js',
     path: path.resolve(__dirname, 'dist'),
+  },
+  resolve: {
+    extensions: ['.js', '.jsx'],
   },
   module: {
     rules: [
@@ -17,9 +20,6 @@ module.exports = {
           options: {
             presets: ['@babel/preset-env', '@babel/preset-react'],
           },
-        },
-        resolve: {
-          extensions: ['.js', '.jsx']
         },
       },
     ],
